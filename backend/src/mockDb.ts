@@ -6,4 +6,18 @@ export interface Db {
   orders: OrderDbo[];
 }
 
-export const mockDb: Db = { orders: [], users: [] };
+export const mockDb: Db = {
+  orders: [],
+  users: [
+    {
+      id: 'id_99',
+      name: 'john',
+      password: '123',
+    },
+    {
+      id: 'id_100',
+      name: 'maria',
+      password: '123',
+    },
+  ],
+};

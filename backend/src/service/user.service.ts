@@ -35,4 +35,8 @@ export class UserService {
       .map(({ name }) => name);
     return followers;
   }
+
+  findUserByName(name: string) {
+    return mockDb.users.find((user) => user.name === name);
+  }
 }
