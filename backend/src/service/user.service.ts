@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserDbo } from 'src/dbo/userDbo';
 import { mockDb } from 'src/mockDb';
 import { Omit } from 'src/types';
@@ -23,6 +23,27 @@ export class UserService {
   getLeader() {
     const leader = mockDb.users.find(({ role }) => role === 'leader');
     return { userId: leader?.id, name: leader?.name };
+  }
+
+  setUserAsLeader(userId: string) {
+    if (this.getLeader()) {
+      throw new HttpException(
+        "This is an attemted mutiny. One more try and I'll have you be hanged.",
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    this.setRole(userId, 'leader');
+  }
+
+  setUserAsFollower(userId: string) {
+    const leader = this.getLeader();
+    if (leader.userId === userId) {
+      throw new HttpException(
+        'Once a leader, always a leader.',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+    this.setRole(userId, 'follower');
   }
 
   getAllUser() {

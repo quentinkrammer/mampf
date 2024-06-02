@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Request } from '@nestjs/common';
+import { Public } from 'src/decorators';
 import { AuthRequestDto } from 'src/dto/authDto';
 import { UserDto } from 'src/dto/userDto';
 import { UserService } from 'src/service/user.service';
@@ -12,15 +13,18 @@ export class UserController {
     return this.userService.getLeader();
   }
 
-  @Get()
-  getProfile(@Request() req: AuthRequestDto) {
-    return req.user;
+  @Post('leader')
+  setUserAsLeader(@Request() { user: { sub: userId } }: AuthRequestDto) {
+    return this.userService.setUserAsLeader(userId);
   }
-  // getUser() {
-  //   return this.userService.getAllUser();
-  // }
+
+  @Post('follower')
+  setUserAsFollower(@Request() { user: { sub: userId } }: AuthRequestDto) {
+    return this.userService.setUserAsFollower(userId);
+  }
 
   @Post()
+  @Public()
   createUser(@Body() userDto: UserDto) {
     this.userService.createUser(userDto);
   }
