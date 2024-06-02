@@ -1,19 +1,3 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  --background-color-dark: #efefef;
-  --background-color-light: #fff;
-  --primary-color: #4070f4;
-  --primary-color-highlight: #265df2;
-  --text-color: #707070;
-  --text-color-light: #efefef;
-
-  background-color: var(--background-color-dark);
-  color: var(--text-color);
-}
-
 :where(*) {
   box-sizing: border-box;
   padding: 0;
@@ -22,11 +6,4 @@
 
 body {
   height: 100dvh;
-}
-
-.button {
-  color: "var(--text-color-light)";
-}
-.button:hover {
-  background: "var(--primary-color-highlight)";
 }
