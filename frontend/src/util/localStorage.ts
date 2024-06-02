@@ -1,5 +1,5 @@
 import { isNil } from "lodash";
-import { LocalStorageKey } from "../types";
+import { LocalStorageKey } from "../constants";
 
 export function readLocalStorage(key: LocalStorageKey) {
   const storage = window.localStorage;
