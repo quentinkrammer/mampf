@@ -26,6 +26,9 @@ dependencies:
   '@types/lodash':
     specifier: ^4.17.4
     version: 4.17.4
+  '@types/node':
+    specifier: ^20.14.0
+    version: 20.14.0
   classnames:
     specifier: ^2.5.1
     version: 2.5.1
@@ -78,7 +81,7 @@ devDependencies:
     version: 5.2.2
   vite:
     specifier: ^5.2.0
-    version: 5.2.0
+    version: 5.2.0(@types/node@20.14.0)
 
 packages:
 
@@ -1137,6 +1140,11 @@ packages:
     resolution: {integrity: sha512-wYCP26ZLxaT3R39kiN2+HcJ4kTd3U1waI/cY7ivWYqFP6pW3ZNpvi6Wd6PHZx7T/t8z0vlkXMg3QYLa7DZ/IJQ==}
     dev: false
 
+  /@types/node@20.14.0:
+    resolution: {integrity: sha512-5cHBxFGJx6L4s56Bubp4fglrEpmyJypsqI6RgzMfBHWUJQGWAAi8cWcgetEbZXHYXo9C2Fa4EEds/uSyS4cxmA==}
+    dependencies:
+      undici-types: 5.26.5
+
   /@types/parse-json@4.0.2:
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
     dev: false
@@ -1317,7 +1325,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.24.6)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.2.0
+      vite: 5.2.0(@types/node@20.14.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2434,6 +2442,9 @@ packages:
     hasBin: true
     dev: true
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   /update-browserslist-db@1.0.16(browserslist@4.23.0):
     resolution: {integrity: sha512-KVbTxlBYlckhF5wgfyZXTWnMn7MMZjMu9XG8bPlliUOP9ThaF4QnhP8qrjrH7DRzHfSk0oQv1wToW+iA5GajEQ==}
     hasBin: true
@@ -2451,7 +2462,7 @@ packages:
       punycode: 2.3.1
     dev: true
 
-  /vite@5.2.0:
+  /vite@5.2.0(@types/node@20.14.0):
     resolution: {integrity: sha512-xMSLJNEjNk/3DJRgWlPADDwaU9AgYRodDH2t6oENhJnIlmU9Hx1Q6VpjyXua/JdMw1WJRbnAgHJ9xgET9gnIAg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
@@ -2479,6 +2490,7 @@ packages:
       terser:
         optional: true
     dependencies:
+      '@types/node': 20.14.0
       esbuild: 0.20.2
       postcss: 8.4.38
       rollup: 4.18.0
