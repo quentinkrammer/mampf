@@ -9,7 +9,7 @@ export function useMyUserData() {
     queryKey: ["myUserData"],
     queryFn: async () => {
       const jwt = readLocalStorage(LOCAL_STORAGE_KEYS.jwt);
-      if (!jwt) return;
+      if (!jwt) return false;
       const { body } = await get("users/myUserData");
       return userDataSchema.parse(body);
     },

@@ -22,7 +22,7 @@ function App() {
         }}
       >
         <NavigationDrawer />
-        <Avatar>{data?.name.charAt(0)}</Avatar>
+        <Avatar>{data && data?.name.charAt(0)}</Avatar>
       </div>
 
       <Outlet />

@@ -15,6 +15,7 @@ import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { PAGES } from "../constants";
 import { useActiveRoute } from "../hooks/useActiveRoute";
+import { useMyUserData } from "../hooks/useMyUserData";
 import { Omit } from "../types";
 
 const PAGES_NAVBAR_DATA_MAP: Omit<
@@ -27,13 +28,15 @@ const PAGES_NAVBAR_DATA_MAP: Omit<
 export function NavigationDrawer() {
   const [open, setOpen] = useState(false);
   const activeRoute = useActiveRoute();
+  const { data: userData } = useMyUserData();
+  const isNotLoggedIn = !userData;
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
   return (
-    <div>
+    <div className={classNames({ [styles.invisible]: isNotLoggedIn })}>
       <IconButton onClick={toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
@@ -82,4 +85,5 @@ const styles = {
     background: "rgba(255, 255, 255, 0.08)",
     "&&:hover": { background: "rgba(255, 255, 255, 0.16)" },
   }),
+  invisible: css({ visibility: "hidden" }),
 };
