@@ -8,10 +8,12 @@ export function useMyUserData() {
   return useQuery({
     queryKey: ["myUserData"],
     queryFn: async () => {
+      const jwt = readLocalStorage(LOCAL_STORAGE_KEYS.jwt);
+      if (!jwt) return;
       const { body } = await get("users/myUserData");
       return userDataSchema.parse(body);
     },
-    enabled: !!readLocalStorage(LOCAL_STORAGE_KEYS.jwt),
+
     staleTime: Infinity,
   });
 }

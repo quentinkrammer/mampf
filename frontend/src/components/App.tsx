@@ -2,6 +2,7 @@ import { Avatar } from "@mui/material";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS, PAGES } from "../constants";
+import { useActiveRoute } from "../hooks/useActiveRoute";
 import { useMyUserData } from "../hooks/useMyUserData";
 import { readLocalStorage } from "../util/localStorage";
 import { NavigationDrawer } from "./NavigationDrawer";
@@ -31,6 +32,7 @@ function App() {
 
 function useRedirectToAuthOrMyOrder() {
   const navigate = useNavigate();
+  const activeRoute = useActiveRoute();
 
   useEffect(() => {
     const jwt = readLocalStorage(LOCAL_STORAGE_KEYS.jwt);
@@ -39,7 +41,7 @@ function useRedirectToAuthOrMyOrder() {
       return;
     }
     navigate(PAGES.myOrder);
-  }, [navigate]);
+  }, [navigate, activeRoute]);
 }
 
 export default App;

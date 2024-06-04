@@ -24,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider theme={darkTheme}>
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
-        <RouterProvider router={router} />;
+        <RouterProvider router={router} />
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>
