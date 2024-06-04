@@ -1,4 +1,4 @@
-import { Fastfood, Home } from "@mui/icons-material";
+import { Fastfood } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   IconButton,
@@ -9,22 +9,24 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import classNames from "classnames";
 import { css } from "goober";
 import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { PAGES } from "../constants";
+import { useActiveRoute } from "../hooks/useActiveRoute";
 import { Omit } from "../types";
 
 const PAGES_NAVBAR_DATA_MAP: Omit<
   Record<keyof typeof PAGES, { label: string; icon: ReactNode }>,
   "auth"
 > = {
-  root: { label: "Home", icon: <Home /> },
   myOrder: { label: "My Order", icon: <Fastfood /> },
 };
 
 export function NavigationDrawer() {
   const [open, setOpen] = useState(false);
+  const activeRoute = useActiveRoute();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -43,17 +45,29 @@ export function NavigationDrawer() {
         >
           <List>
             {Object.entries(PAGES_NAVBAR_DATA_MAP).map(
-              ([route, { icon, label }]) => (
-                <ListItem key={route} className={styles.linkListItem}>
-                  <Link
-                    to={PAGES[route as keyof typeof PAGES]}
-                    style={{ display: "flex", alignItems: "center" }}
+              ([route, { icon, label }]) => {
+                const isActiveRoute = route === activeRoute;
+                return (
+                  <ListItem
+                    key={route}
+                    className={classNames(styles.linkListItem, {
+                      [styles.activeLink]: isActiveRoute,
+                    })}
                   >
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText>{label}</ListItemText>
-                  </Link>
-                </ListItem>
-              )
+                    <Link
+                      to={PAGES[route as keyof typeof PAGES]}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        color: "#FFF",
+                      }}
+                    >
+                      <ListItemIcon>{icon}</ListItemIcon>
+                      <ListItemText>{label}</ListItemText>
+                    </Link>
+                  </ListItem>
+                );
+              }
             )}
           </List>
         </Box>
@@ -63,5 +77,9 @@ export function NavigationDrawer() {
 }
 
 const styles = {
-  linkListItem: css({ "&:hover": { background: "rgba(0, 0, 0, 0.04)" } }),
+  linkListItem: css({ "&:hover": { background: "rgba(255, 255, 255, 0.08)" } }),
+  activeLink: css({
+    background: "rgba(255, 255, 255, 0.08)",
+    "&&:hover": { background: "rgba(255, 255, 255, 0.16)" },
+  }),
 };

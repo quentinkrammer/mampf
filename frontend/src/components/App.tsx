@@ -1,15 +1,29 @@
+import { Avatar } from "@mui/material";
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS, PAGES } from "../constants";
+import { useMyUserData } from "../hooks/useMyUserData";
 import { readLocalStorage } from "../util/localStorage";
 import { NavigationDrawer } from "./NavigationDrawer";
 
 function App() {
   useRedirectToAuthOrMyOrder();
+  const { data } = useMyUserData();
 
   return (
     <>
-      <NavigationDrawer />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "1rem",
+        }}
+      >
+        <NavigationDrawer />
+        <Avatar>{data?.name.charAt(0)}</Avatar>
+      </div>
+
       <Outlet />
     </>
   );

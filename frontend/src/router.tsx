@@ -6,7 +6,7 @@ import { PAGES } from "./constants";
 
 export const router = createBrowserRouter([
   {
-    path: PAGES.root,
+    path: "/",
     element: <App />,
     children: [
       { path: PAGES.auth, element: <AuthPage /> },
