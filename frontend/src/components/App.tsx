@@ -5,7 +5,7 @@ import { readLocalStorage } from "../util/localStorage";
 import { NavigationDrawer } from "./NavigationDrawer";
 
 function App() {
-  useRedirectToAuth();
+  useRedirectToAuthOrMyOrder();
 
   return (
     <>
@@ -15,12 +15,11 @@ function App() {
   );
 }
 
-function useRedirectToAuth() {
+function useRedirectToAuthOrMyOrder() {
   const navigate = useNavigate();
 
   useEffect(() => {
     const jwt = readLocalStorage(LOCAL_STORAGE_KEYS.jwt);
-    console.log(jwt);
     if (!jwt) {
       navigate(PAGES.auth);
       return;

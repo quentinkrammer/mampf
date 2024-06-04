@@ -8,6 +8,11 @@ import { UserService } from 'src/service/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get('myUserData')
+  getClientsUserData(@Request() { user: { sub: userId } }: AuthRequestDto) {
+    return this.userService.getUserData(userId);
+  }
+
   @Get('leader')
   getLeader() {
     return this.userService.getLeader();

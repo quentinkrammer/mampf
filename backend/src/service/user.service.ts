@@ -1,7 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserDbo } from 'src/dbo/userDbo';
 import { mockDb } from 'src/mockDb';
 import { Omit } from 'src/types';
+import { omit } from 'src/utils/omit';
 import { uniqueId } from 'src/utils/uniqueId';
 
 @Injectable()
@@ -57,7 +63,10 @@ export class UserService {
     return followers;
   }
 
-  findUserByName(name: string) {
-    return mockDb.users.find((user) => user.name === name);
+  getUserData(id: string) {
+    const user = mockDb.users.find((user) => user.id === id);
+    if (!user)
+      throw new NotFoundException(`User with id '${id}' coud not be found`);
+    return omit(user, 'password');
   }
 }

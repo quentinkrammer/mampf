@@ -2,8 +2,10 @@ import { Button, TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { PAGES } from "../constants";
-import { post } from "../fetch";
+import { LOCAL_STORAGE_KEYS, PAGES } from "../constants";
+import { post, requestHeaders } from "../fetch";
+import { setLocalStorage } from "../util/localStorage";
+import { accessTokenSchema } from "../zod";
 
 export function AuthPage() {
   const [name, setName] = useState("john");
@@ -47,7 +49,10 @@ function useLoginMutation(name: string, password: string) {
     mutationFn: () => {
       return post("auth/login", { name, password });
     },
-    onSuccess: () => {
+    onSuccess: ({ body }) => {
+      const { access_token: jwt } = accessTokenSchema.parse(body);
+      setLocalStorage(LOCAL_STORAGE_KEYS.jwt, jwt);
+      requestHeaders.set("Authorization", `Bearer ${jwt}`);
       nagigate(`/${PAGES.myOrder}`);
     },
     onError: () => {

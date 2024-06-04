@@ -1,16 +1,20 @@
 import { pick, trim } from "lodash";
+import { LOCAL_STORAGE_KEYS } from "./constants";
+import { readLocalStorage } from "./util/localStorage";
 
 type FetchParameters = Parameters<typeof fetchRequest>;
 export type UrlSearchParams = NonNullable<
   FetchParameters[1]
 >["urlSearchParams"];
 
-const DEFAULT_OPTIONS = {
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
-} as const;
+export const requestHeaders = new Headers({
+  Accept: "application/json",
+  "Content-Type": "application/json",
+});
+const jwt = readLocalStorage(LOCAL_STORAGE_KEYS.jwt);
+if (jwt) {
+  requestHeaders.set("Authorization", `Bearer ${jwt}`);
+}
 
 async function fetchRequest(
   url: string,
@@ -27,7 +31,7 @@ async function fetchRequest(
   const urlParams = searchParams ? `?${searchParams}` : "";
 
   const response = await fetch(`${fullUrl}${urlParams}`, {
-    ...DEFAULT_OPTIONS,
+    headers: requestHeaders,
     ...options,
   });
 
