@@ -43,8 +43,7 @@ async function fetchRequest(
     const body = await response.json();
     return { body, ...pick(response, "status", "statusText", "ok") };
   } catch (error) {
-    console.error(error);
-    throw Error("Response body could not be parsed to JSON.");
+    console.error("Response body could not be parsed to JSON.", error);
   }
 }
 

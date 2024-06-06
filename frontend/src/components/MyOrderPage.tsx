@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField } from "@mui/material";
 import { isNil } from "lodash";
 import { useState } from "react";
 import { useLeader } from "../hooks/useLeader";
@@ -6,11 +6,12 @@ import { useLeaderMutation } from "../hooks/useLeaderMutation";
 import { useMyUserData } from "../hooks/useMyUserData";
 
 export function MyOrderPage() {
-  const { data: leader } = useLeader();
+  const { isSuccess, isFetching } = useLeader();
 
-  if (!leader) return <MissingLeaderForm />;
+  if (isSuccess) return <MyOrderForm />;
+  if (isFetching) return <CircularProgress />;
 
-  return <MyOrderForm />;
+  return <MissingLeaderForm />;
 }
 
 function MyOrderForm() {

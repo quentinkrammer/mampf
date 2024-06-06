@@ -12,7 +12,7 @@ export function useLeaderMutation() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.getLeader, QUERY_KEYS.getMyUserData],
+        queryKey: [QUERY_KEYS.getLeader],
       });
     },
   });

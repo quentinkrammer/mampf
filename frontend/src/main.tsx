@@ -5,12 +5,12 @@ import "@fontsource/roboto/700.css";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import { router } from "./router";
-
 const queryClient = new QueryClient();
 
 const darkTheme = createTheme({
@@ -25,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
         <RouterProvider router={router} />
+        <ReactQueryDevtools />
       </QueryClientProvider>
     </ThemeProvider>
   </React.StrictMode>
