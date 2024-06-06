@@ -18,6 +18,13 @@ export class UserService {
     return id;
   }
 
+  editUser(userId: string, newData: Partial<Omit<UserDbo, 'id'>>) {
+    mockDb.users = mockDb.users.map((user) => {
+      if (user.id !== userId) return user;
+      return { ...user, ...newData };
+    });
+  }
+
   setRole(userId: UserDbo['id'], role: UserDbo['role']) {
     const users = mockDb.users.map((user) => {
       if (user.id !== userId) return user;
@@ -28,6 +35,7 @@ export class UserService {
 
   getLeader() {
     const leader = mockDb.users.find(({ role }) => role === 'leader');
+    if (!leader) return;
     return { userId: leader?.id, name: leader?.name };
   }
 
@@ -43,7 +51,7 @@ export class UserService {
 
   setUserAsFollower(userId: string) {
     const leader = this.getLeader();
-    if (leader.userId === userId) {
+    if (leader?.userId === userId) {
       throw new HttpException(
         'Once a leader, always a leader.',
         HttpStatus.FORBIDDEN,

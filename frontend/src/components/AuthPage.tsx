@@ -17,6 +17,7 @@ export function AuthPage() {
   return (
     <div>
       <TextField
+        // TODO check if id is needed here
         id="outlined-basic"
         label="Username"
         variant="outlined"

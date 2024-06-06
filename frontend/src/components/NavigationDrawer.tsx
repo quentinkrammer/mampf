@@ -23,6 +23,7 @@ const PAGES_NAVBAR_DATA_MAP: Omit<
   "auth"
 > = {
   myOrder: { label: "My Order", icon: <Fastfood /> },
+  allOrders: { label: "All Orders", icon: <Fastfood /> },
 };
 
 export function NavigationDrawer() {

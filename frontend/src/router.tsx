@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import { AllOrdersPage } from "./components/AllOrdersPage";
 import App from "./components/App";
 import { AuthPage } from "./components/AuthPage";
 import { MyOrderPage } from "./components/MyOrderPage";
@@ -11,6 +12,7 @@ export const router = createBrowserRouter([
     children: [
       { path: PAGES.auth, element: <AuthPage /> },
       { path: PAGES.myOrder, element: <MyOrderPage /> },
+      { path: PAGES.allOrders, element: <AllOrdersPage /> },
     ],
   },
 ]);
