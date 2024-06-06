@@ -10,8 +10,10 @@ export function useMyUserData() {
     queryFn: async () => {
       const jwt = readLocalStorage(LOCAL_STORAGE_KEYS.jwt);
       if (!jwt) throw Error("Cannot fetch UserData until authenticated");
-      const { body } = await get("users/getMyUserData");
-      return userDataSchema.parse(body);
+      const res = await get("users/getMyUserData");
+      return userDataSchema.parse(res?.body);
     },
+    staleTime: Infinity,
+    retry: false,
   });
 }

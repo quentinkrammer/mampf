@@ -11,8 +11,12 @@ export function useLeaderMutation() {
       return post("users/leader", reqBody);
     },
     onSuccess: () => {
+      // Why the fuck cant I simply pass both querry keys in a single list
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.getLeader],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.getMyUserData],
       });
     },
   });
