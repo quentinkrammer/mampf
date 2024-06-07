@@ -13,3 +13,8 @@ export const QUERY_KEYS = {
   getMyUserData: "getMyUserData",
   getLeader: "getLeader",
 };
+
+export const FORM_HELPER_TEXT = {
+  fieldRequired: 'Field required',
+  valueMustMatchNumberFormat: 'Value must match number format'
+}

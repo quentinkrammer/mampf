@@ -14,3 +14,11 @@ export const leaderSchema = z.object({
   userId: z.string(),
   name: z.string(),
 });
+
+export const orderSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  details: z.string(),
+  price: z.optional(z.number()),
+  payed: z.optional(z.boolean())
+})

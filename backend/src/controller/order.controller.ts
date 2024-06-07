@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -20,9 +21,11 @@ export class OrderController {
     return this.orderService.getAllOrders();
   }
 
-  @Get('myOrder')
+  @Get('getMyOrder')
   getOrderFromUser(@Request() { user: { sub: userId } }: AuthRequestDto) {
-    return this.orderService.getOrderFromUser(userId);
+    const order =  this.orderService.getOrderFromUser(userId);
+    if(!order) throw new NotFoundException(`No order found`);
+    return order
   }
 
   @Patch(':orderId')

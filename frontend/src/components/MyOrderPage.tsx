@@ -1,63 +1,89 @@
-import { Button, CircularProgress, TextField } from "@mui/material";
-import { isNil } from "lodash";
-import { useState } from "react";
+import { CircularProgress, InputAdornment, TextField } from "@mui/material";
 import { useLeader } from "../hooks/useLeader";
-import { useLeaderMutation } from "../hooks/useLeaderMutation";
-import { useMyUserData } from "../hooks/useMyUserData";
+import { useMyOrder } from "../hooks/useMyOrder";
+import { MissingLeaderForm } from "./MissingLeaderForm";
+import { useState } from "react";
+import { FORM_HELPER_TEXT } from "../constants";
 
 export function MyOrderPage() {
-  const { isSuccess, isFetching } = useLeader();
+  const { isSuccess, isLoadingError } = useLeader();
 
   if (isSuccess) return <MyOrderForm />;
-  if (isFetching) return <CircularProgress />;
-
-  return <MissingLeaderForm />;
+  if (isLoadingError) return <MissingLeaderForm />
+  return <CircularProgress />;
 }
 
 function MyOrderForm() {
-  return 42;
+  const { data, isLoadingError, isSuccess } = useMyOrder()
+
+  if (isSuccess) return "success";
+  if (isLoadingError) return <InitialOrderForm />
+  return <CircularProgress />;;
 }
 
-function MissingLeaderForm() {
-  return (
-    <div>
-      <p>Before anyone can place an order, someone must sign up as leader.</p>
-      <SignUpAsLeader />
-    </div>
-  );
-}
 
-function SignUpAsLeader() {
-  const { data } = useMyUserData();
-  const [paypal, setPaypal] = useState("");
-  const leaderMutation = useLeaderMutation();
-
-  const hasPaypal = !isNil(data) && data?.paypalUrl;
-
-  if (hasPaypal)
-    return (
-      <Button onClick={() => leaderMutation.mutate({})}>
-        Sign up as Leader
-      </Button>
-    );
+function InitialOrderForm() {
+  const [details, setDetails] = useState('')
+  const [detailsError, setDetailsError] = useState(false)
+  const [price, setPrice] = useState('')
+  const [priceError, setPriceError] = useState(false)
 
   return (
     <div>
-      <p>To become a leader, please set up your Paypal-Me link:</p>
       <TextField
-        id="outlined-basic"
-        // TODO paypal icon
-        label="Paypal-Me"
+        label="Order Details"
         variant="outlined"
-        onChange={(e) => setPaypal(e.target.value)}
-        value={paypal}
+        value={details}
+        error={detailsError}
+        helperText={detailsError && FORM_HELPER_TEXT.fieldRequired}
+        required
+        onChange={({ target: { value } }) => {
+          setDetails(value)
+          if (value) setDetailsError(false)
+        }}
+        onBlur={(e) => { if (!e.target.value) setDetailsError(true) }}
       />
-      <Button
-        disabled={false}
-        onClick={() => leaderMutation.mutate({ paypal })}
-      >
-        Sign up as Leader
-      </Button>
-    </div>
-  );
+      <TextField
+        label="Price"
+        variant="outlined"
+        value={price}
+        error={priceError}
+        helperText={priceError && FORM_HELPER_TEXT.valueMustMatchNumberFormat}
+        sx={{ m: 1, width: '25ch' }}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">€</InputAdornment>,
+        }}
+        onChange={({ target: { value } }) => {
+          if (!isPrice(value)) return
+          setPriceError(false)
+          setPrice(value)
+        }}
+        onBlur={({ target: { value } }) => {
+          if (value && !isPrice(value)) setPriceError(true)
+          const converted = displayStringAsPrice(value) ?? ''
+          setPrice(converted)
+        }}
+      />
+    </div>)
+}
+
+
+
+function isPrice(value: string) {
+  const forbiddenChars = new RegExp('[^0-9,.]')
+  const multipleDecimals = new RegExp('[.,].?[.,]')
+  return !forbiddenChars.test(value) && !multipleDecimals.test(value)
+
+}
+
+function displayStringAsPrice(value: string) {
+  if (!isPrice(value) || !value) return
+  const decimalRegex = new RegExp('[,.]')
+  const decimalIndex = value.search(decimalRegex)
+  if (decimalIndex === -1) {
+    return `${value}.00`
+  }
+  const wholeNumber = value.substring(0, decimalIndex).padStart(1, '0')
+  const fraction = value.substring(decimalIndex + 1, decimalIndex + 3).padEnd(2, '0')
+  return `${wholeNumber}.${fraction}`
 }

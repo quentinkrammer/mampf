@@ -12,15 +12,12 @@ export function AuthPage() {
   return (
     <div>
       <TextField
-        // TODO check if id is needed here
-        id="outlined-basic"
         label="Username"
         variant="outlined"
         onChange={(e) => setName(e.target.value)}
         value={name}
       />
       <TextField
-        id="outlined-basic"
         label="Password"
         variant="outlined"
         onChange={(e) => setPassword(e.target.value)}
