@@ -12,6 +12,7 @@ export type LocalStorageKey =
 export const QUERY_KEYS = {
   getMyUserData: "getMyUserData",
   getLeader: "getLeader",
+  getMyOrder: "getMyOrder"
 };
 
 export const FORM_HELPER_TEXT = {

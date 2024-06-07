@@ -1,9 +1,12 @@
-import { CircularProgress, InputAdornment, TextField } from "@mui/material";
+import { Button, CircularProgress, InputAdornment, TextField } from "@mui/material";
 import { useLeader } from "../hooks/useLeader";
 import { useMyOrder } from "../hooks/useMyOrder";
 import { MissingLeaderForm } from "./MissingLeaderForm";
 import { useState } from "react";
 import { FORM_HELPER_TEXT } from "../constants";
+import { isPrice } from "../util/isPrice";
+import { displayStringAsPrice } from "../util/displayStringAsPrice";
+import { useMyOrderMutation } from "../hooks/useMyOrderMutation";
 
 export function MyOrderPage() {
   const { isSuccess, isLoadingError } = useLeader();
@@ -27,6 +30,7 @@ function InitialOrderForm() {
   const [detailsError, setDetailsError] = useState(false)
   const [price, setPrice] = useState('')
   const [priceError, setPriceError] = useState(false)
+  const orderMutation = useMyOrderMutation()
 
   return (
     <div>
@@ -64,26 +68,11 @@ function InitialOrderForm() {
           setPrice(converted)
         }}
       />
+      <Button onClick={() => orderMutation.mutate({ details, price })} disabled={!details}>
+        Place Order
+      </Button>
     </div>)
 }
 
 
 
-function isPrice(value: string) {
-  const forbiddenChars = new RegExp('[^0-9,.]')
-  const multipleDecimals = new RegExp('[.,].?[.,]')
-  return !forbiddenChars.test(value) && !multipleDecimals.test(value)
-
-}
-
-function displayStringAsPrice(value: string) {
-  if (!isPrice(value) || !value) return
-  const decimalRegex = new RegExp('[,.]')
-  const decimalIndex = value.search(decimalRegex)
-  if (decimalIndex === -1) {
-    return `${value}.00`
-  }
-  const wholeNumber = value.substring(0, decimalIndex).padStart(1, '0')
-  const fraction = value.substring(decimalIndex + 1, decimalIndex + 3).padEnd(2, '0')
-  return `${wholeNumber}.${fraction}`
-}
