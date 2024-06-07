@@ -4,37 +4,38 @@ import {
   Get,
   NotFoundException,
   Param,
-  Patch,
   Post,
+  Put,
   Request,
 } from '@nestjs/common';
 import { AuthRequestDto } from 'src/dto/authDto';
 import { OrderDto } from 'src/dto/orderDto';
 import { OrderService } from '../service/order.service';
+import { isEmpty } from 'lodash';
 
 @Controller('orders')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   @Get()
   getAllOrders() {
     return this.orderService.getAllOrders();
   }
 
-  @Get('getMyOrder')
+  @Get('getMyOrders')
   getOrderFromUser(@Request() { user: { sub: userId } }: AuthRequestDto) {
-    const order =  this.orderService.getOrderFromUser(userId);
-    if(!order) throw new NotFoundException(`No order found`);
+    const order = this.orderService.getOrderFromUser(userId);
+    if (isEmpty(order)) throw new NotFoundException(`No order found`);
     return order
   }
 
-  @Patch(':orderId')
+  @Put(':orderId')
   editOrder(
-    @Param('orderId') orderId: string,
+    @Param() { orderId }: { orderId: string },
     @Request() { user: { sub: userId } }: AuthRequestDto,
     @Body() orderDto: OrderDto,
   ) {
-    return this.orderService.editOrder(orderId, userId, orderDto);
+    return this.orderService.editOrder(userId, orderId, orderDto);
   }
 
   @Post()

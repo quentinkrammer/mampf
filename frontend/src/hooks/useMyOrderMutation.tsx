@@ -5,12 +5,12 @@ import { post } from "../fetch";
 import { isFinite } from "lodash";
 import { displayStringAsPrice } from "../util/displayStringAsPrice";
 
-export function useMyOrderMutation() {
+export function useMyOrderMutation(onOrderPlaced?: () => void) {
 
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationKey: ['postMyOrder'],
+        mutationKey: ['postMyOrders'],
         mutationFn: ({ details, price }: { details: string; price?: string; }) => {
             const priceFloat = parseFloat(displayStringAsPrice(price) ?? '');
             const reqBody: any = { details };
@@ -21,7 +21,10 @@ export function useMyOrderMutation() {
             return post('orders', parsed);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getMyOrder] });
+            onOrderPlaced?.()
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getMyOrders] });
         }
     });
 }
+
+

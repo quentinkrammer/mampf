@@ -11,7 +11,7 @@ function App() {
   const { data } = useMyUserData();
 
   return (
-    <>
+    <div style={{ height: '100dvh', display: 'grid', gridTemplateRows: 'auto 1fr', gridAutoFlow: 'row' }}>
       <div
         style={{
           display: "flex",
@@ -24,8 +24,10 @@ function App() {
         <Avatar>{data && data?.name.charAt(0)}</Avatar>
       </div>
 
-      <Outlet />
-    </>
+      <div style={{ overflow: 'auto', height: '100%' }} className="foooo">
+        <Outlet />
+      </div>
+    </div>
   );
 }
 

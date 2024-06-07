@@ -35,6 +35,6 @@ export class OrderService {
   }
 
   getOrderFromUser(userId: string) {
-    return mockDb.orders.find((order) => order.userId === userId);
+    return mockDb.orders.filter((order) => order.userId === userId);
   }
 }
