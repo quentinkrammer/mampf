@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogContent, DialogTitle } from "@mui/material";
 import { useAllOrders } from "../hooks/useAllOrders";
 import { OrderCard } from "./OrderCard";
 import { useState } from "react";
@@ -29,12 +29,12 @@ function EditPriceForm({ orderId, onClose }: EditPriceFormProps) {
   const orderMutation = useEditPriceMutation(onClose)
   const [price, setPrice] = useState('')
 
-  return (<>
+  return (<DialogContent style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingTop: '1rem' }}>
     <MoneyTextField onPrice={(e) => setPrice(e)} price={price} />
-    <Button onClick={() => orderMutation.mutate({ orderId, price })} disabled={!price}>
+    <Button onClick={() => orderMutation.mutate({ orderId, price })} disabled={!price} style={{ alignSelf: 'end' }} variant="contained">
       Save
     </Button>
-  </>)
+  </DialogContent>)
 }
 
 
