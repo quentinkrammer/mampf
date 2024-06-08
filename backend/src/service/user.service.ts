@@ -36,7 +36,7 @@ export class UserService {
   getLeader() {
     const leader = mockDb.users.find(({ role }) => role === 'leader');
     if (!leader) return;
-    return { userId: leader?.id, name: leader?.name };
+    return { userId: leader?.id, name: leader?.name, paypal: leader.paypalUrl };
   }
 
   setUserAsLeader(userId: string) {

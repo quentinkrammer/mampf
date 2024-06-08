@@ -13,6 +13,7 @@ export const userDataSchema = z.object({
 export const leaderSchema = z.object({
   userId: z.string(),
   name: z.string(),
+  paypal: z.string(),
 });
 
 export const orderSchema = z.object({

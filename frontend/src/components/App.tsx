@@ -1,10 +1,12 @@
 import { Avatar } from "@mui/material";
+
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS, PAGES } from "../constants";
 import { useMyUserData } from "../hooks/useMyUserData";
 import { readLocalStorage } from "../util/localStorage";
 import { NavigationDrawer } from "./NavigationDrawer";
+import { LeaderLink } from "./LeaderLink";
 
 function App() {
   useRedirectToAuthOrMyOrder();
@@ -21,10 +23,11 @@ function App() {
         }}
       >
         <NavigationDrawer />
+        <LeaderLink />
         <Avatar>{data && data?.name.charAt(0)}</Avatar>
       </div>
 
-      <div style={{ overflow: 'auto', height: '100%' }} className="foooo">
+      <div style={{ overflow: 'auto', height: '100%' }} >
         <Outlet />
       </div>
     </div>
@@ -43,5 +46,7 @@ function useRedirectToAuthOrMyOrder() {
     navigate(PAGES.myOrder);
   }, [navigate]);
 }
+
+
 
 export default App;
