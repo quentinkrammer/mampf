@@ -52,4 +52,4 @@ export const initialDb: Db = {
   ],
 };
 
-export const mockDb = initialDb;
+export const mockDb = { ...initialDb };

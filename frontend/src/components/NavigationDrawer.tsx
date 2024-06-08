@@ -1,22 +1,27 @@
-import { Fastfood, Groups, ListAlt } from "@mui/icons-material";
+import { Fastfood, Groups, ListAlt, Logout } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Button,
   IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import { useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { css } from "goober";
 import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
-import { PAGES } from "../constants";
+import { LOCAL_STORAGE_KEYS, PAGES } from "../constants";
+import { requestHeaders } from "../fetch";
 import { useActiveRoute } from "../hooks/useActiveRoute";
 import { useMyUserData } from "../hooks/useMyUserData";
 import { Omit } from "../types";
+import { deleteLocalStorage } from "../util/localStorage";
 
 const PAGES_NAVBAR_DATA_MAP: Omit<
   Record<keyof typeof PAGES, { label: string; icon: ReactNode }>,
@@ -32,9 +37,18 @@ export function NavigationDrawer() {
   const activeRoute = useActiveRoute();
   const { data: userData } = useMyUserData();
   const isNotLoggedIn = !userData;
+  const queryClient = useQueryClient();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
+  };
+
+  const onLogout = () => {
+    // pretend i am sending a request to the backend to blacklist the jwt
+    deleteLocalStorage(LOCAL_STORAGE_KEYS.jwt);
+    requestHeaders.delete("Authorization");
+    queryClient.clear();
+    window.location.reload();
   };
 
   return (
@@ -76,6 +90,13 @@ export function NavigationDrawer() {
             )}
           </List>
         </Box>
+        <Button
+          onClick={onLogout}
+          style={{ marginTop: "auto" }}
+          startIcon={<Logout />}
+        >
+          <Typography>Logout</Typography>
+        </Button>
       </Drawer>
     </div>
   );

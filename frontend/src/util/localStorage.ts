@@ -10,3 +10,7 @@ export function readLocalStorage(key: LocalStorageKey) {
 export function setLocalStorage<T>(key: LocalStorageKey, value: T) {
   window.localStorage.setItem(key, JSON.stringify(value));
 }
+
+export function deleteLocalStorage(key: LocalStorageKey) {
+  window.localStorage.removeItem(key);
+}
