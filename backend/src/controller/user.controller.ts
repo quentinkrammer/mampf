@@ -7,6 +7,7 @@ import {
   Post,
   Request,
 } from '@nestjs/common';
+import { isEmpty } from 'lodash';
 import { Public } from 'src/decorators';
 import { AuthRequestDto } from 'src/dto/authDto';
 import { PostLeaderDto } from 'src/dto/postLeaderDto';
@@ -15,7 +16,7 @@ import { UserService } from 'src/service/user.service';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get('getMyUserData')
   getClientsUserData(@Request() { user: { sub: userId } }: AuthRequestDto) {
@@ -48,6 +49,13 @@ export class UserController {
   @Post('follower')
   setUserAsFollower(@Request() { user: { sub: userId } }: AuthRequestDto) {
     return this.userService.setUserAsFollower(userId);
+  }
+
+  @Get('getFollower')
+  getFollower() {
+    const follower = this.userService.getFollowers();
+    if (isEmpty(follower)) throw new NotFoundException(`Currently no followers exists.`);
+    return follower;
   }
 
   @Post()

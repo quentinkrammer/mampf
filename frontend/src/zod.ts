@@ -10,9 +10,12 @@ export const userDataSchema = z.object({
   id: z.string(),
 });
 
-export const leaderSchema = z.object({
+export const followerSchema = z.object({
   userId: z.string(),
   name: z.string(),
+});
+
+export const leaderSchema = followerSchema.extend({
   paypal: z.string(),
 });
 

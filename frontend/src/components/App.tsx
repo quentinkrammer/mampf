@@ -1,4 +1,4 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -7,10 +7,19 @@ import { useMyUserData } from "../hooks/useMyUserData";
 import { readLocalStorage } from "../util/localStorage";
 import { NavigationDrawer } from "./NavigationDrawer";
 import { LeaderLink } from "./LeaderLink";
+import { PersonAddAlt } from "@mui/icons-material";
+import { useFollowerMutation } from "../hooks/useFollowerMutation";
 
 function App() {
   useRedirectToAuthOrMyOrder();
+  const followerMutation = useFollowerMutation()
   const { data } = useMyUserData();
+
+  const hasNoRole = !data?.role
+
+  const onJoinAsFollower = () => {
+    followerMutation.mutate()
+  }
 
   return (
     <div style={{ height: '100dvh', display: 'grid', gridTemplateRows: 'auto 1fr', gridAutoFlow: 'row' }}>
@@ -23,7 +32,10 @@ function App() {
         }}
       >
         <NavigationDrawer />
-        <LeaderLink />
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {hasNoRole && <Button startIcon={<PersonAddAlt />} onClick={onJoinAsFollower}>Join</Button>}
+          <LeaderLink />
+        </div>
         <Avatar>{data && data?.name.charAt(0)}</Avatar>
       </div>
 

@@ -13,6 +13,7 @@ export type LocalStorageKey =
 export const QUERY_KEYS = {
   getMyUserData: "getMyUserData",
   getLeader: "getLeader",
+  getFollower: "getFollower",
   getMyOrders: "getMyOrders",
   getAllOrders: "getAllOrders"
 };

@@ -53,7 +53,7 @@ export class UserService {
     const leader = this.getLeader();
     if (leader?.userId === userId) {
       throw new HttpException(
-        'Once a leader, always a leader.',
+        'A leader cant be a follower.',
         HttpStatus.FORBIDDEN,
       );
     }
@@ -67,7 +67,7 @@ export class UserService {
   getFollowers() {
     const followers = mockDb.users
       .filter(({ role }) => role === 'follower')
-      .map(({ name }) => name);
+      .map(({ name, id }) => ({ name, userId: id }));
     return followers;
   }
 

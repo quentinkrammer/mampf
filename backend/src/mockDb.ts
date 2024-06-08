@@ -24,5 +24,23 @@ export const mockDb: Db = {
       role: 'leader',
       paypalUrl: 'maria'
     },
+    {
+      id: 'id_104',
+      name: 'bianca',
+      password: '123',
+      role: 'follower',
+    },
+    {
+      id: 'id_105',
+      name: 'quentin',
+      password: '123',
+      role: 'follower',
+    },
+    {
+      id: 'id_106',
+      name: 'sabrina',
+      password: '123',
+      role: 'follower',
+    },
   ],
 };
