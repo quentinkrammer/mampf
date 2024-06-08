@@ -31,7 +31,11 @@ export class OrderService {
   }
 
   getAllOrders() {
-    return mockDb.orders;
+    const users = mockDb.users
+    return mockDb.orders.map(order => {
+      const user = users.find(user => user.id === order.userId)
+      return { ...order, username: user?.name }
+    });
   }
 
   getOrderFromUser(userId: string) {

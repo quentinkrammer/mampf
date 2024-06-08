@@ -14,6 +14,7 @@ export function usePayOrderMutation() {
             }
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getAllOrders] });
             queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getMyOrders] });
         }
     });

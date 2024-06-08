@@ -2,6 +2,7 @@ export const PAGES = {
   auth: "auth",
   myOrder: "myOrder",
   allOrders: "allOrders",
+  shopTeam: "shopTeam"
 } as const;
 export type Pages = (typeof PAGES)[keyof typeof PAGES];
 
@@ -12,7 +13,8 @@ export type LocalStorageKey =
 export const QUERY_KEYS = {
   getMyUserData: "getMyUserData",
   getLeader: "getLeader",
-  getMyOrders: "getMyOrders"
+  getMyOrders: "getMyOrders",
+  getAllOrders: "getAllOrders"
 };
 
 export const FORM_HELPER_TEXT = {

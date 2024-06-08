@@ -20,7 +20,8 @@ export const orderSchema = z.object({
   userId: z.string(),
   details: z.string(),
   price: z.optional(z.number()),
-  payed: z.optional(z.boolean())
+  payed: z.optional(z.boolean()),
+  username: z.optional(z.string())
 })
 export type Order = z.infer<typeof orderSchema>
 

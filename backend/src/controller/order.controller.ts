@@ -17,7 +17,7 @@ import { isEmpty } from 'lodash';
 export class OrderController {
   constructor(private readonly orderService: OrderService) { }
 
-  @Get()
+  @Get('getAllOrders')
   getAllOrders() {
     return this.orderService.getAllOrders();
   }

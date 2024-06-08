@@ -1,4 +1,4 @@
-import { Fastfood } from "@mui/icons-material";
+import { Fastfood, Groups, ListAlt } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   IconButton,
@@ -23,7 +23,8 @@ const PAGES_NAVBAR_DATA_MAP: Omit<
   "auth"
 > = {
   myOrder: { label: "My Order", icon: <Fastfood /> },
-  allOrders: { label: "All Orders", icon: <Fastfood /> },
+  allOrders: { label: "All Orders", icon: <ListAlt /> },
+  shopTeam: { label: "Shop Team", icon: <Groups /> },
 };
 
 export function NavigationDrawer() {
