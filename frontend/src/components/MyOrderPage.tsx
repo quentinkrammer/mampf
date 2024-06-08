@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Dialog, DialogTitle, TextField } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useLeader } from "../hooks/useLeader";
 import { useMyOrder as useMyOrders } from "../hooks/useMyOrder";
 import { MissingLeaderForm } from "./MissingLeaderForm";
@@ -38,7 +38,9 @@ function MyOrderOverview() {
     </div>
     <Dialog onClose={() => setNewOrderDialogOpenState(false)} open={newOrderDialogOpenState}>
       <DialogTitle>Place new order</DialogTitle>
-      <PlaceOrderForm onOrderPlaced={() => setNewOrderDialogOpenState(false)} />
+      <DialogContent style={{ paddingTop: '1rem' }}>
+        <PlaceOrderForm onOrderPlaced={() => setNewOrderDialogOpenState(false)} />
+      </DialogContent>
     </Dialog>
   </div>
 }

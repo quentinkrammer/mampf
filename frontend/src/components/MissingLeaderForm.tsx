@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { isNil } from "lodash";
 import { useState } from "react";
 import { useLeaderMutation } from "../hooks/useLeaderMutation";
@@ -7,8 +7,8 @@ import { useMyUserData } from "../hooks/useMyUserData";
 
 export function MissingLeaderForm() {
     return (
-        <div>
-            <p>Before anyone can place an order, someone must sign up as leader.</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '35rem', marginLeft: 'auto', marginRight: 'auto' }}>
+            <Typography>Before anyone can place an order, someone must sign up as leader.</Typography>
             <SignUpAsLeader />
         </div>
     );
@@ -22,26 +22,25 @@ function SignUpAsLeader() {
 
     if (hasPaypal)
         return (
-            <Button onClick={() => leaderMutation.mutate({})}>
+            <Button onClick={() => leaderMutation.mutate({})} variant="contained">
                 Sign up as Leader
             </Button>
         );
 
     return (
-        <div>
-            <p>To become a leader, please set up your Paypal-Me link:</p>
+        <>
             <TextField
-                // TODO paypal icon
                 label="Paypal-Me"
                 variant="outlined"
                 onChange={(e) => setPaypal(e.target.value)}
-                value={paypal} />
+                value={paypal} required />
             <Button
-                disabled={false}
+                disabled={!paypal}
                 onClick={() => leaderMutation.mutate({ paypal })}
+                variant="contained"
             >
                 Sign up as Leader
             </Button>
-        </div>
+        </>
     );
 }
