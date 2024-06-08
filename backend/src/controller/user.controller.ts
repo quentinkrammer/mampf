@@ -12,11 +12,12 @@ import { Public } from 'src/decorators';
 import { AuthRequestDto } from 'src/dto/authDto';
 import { PostLeaderDto } from 'src/dto/postLeaderDto';
 import { UserDto } from 'src/dto/userDto';
+import { initialDb, mockDb } from 'src/mockDb';
 import { UserService } from 'src/service/user.service';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Get('getMyUserData')
   getClientsUserData(@Request() { user: { sub: userId } }: AuthRequestDto) {
@@ -54,7 +55,8 @@ export class UserController {
   @Get('getFollower')
   getFollower() {
     const follower = this.userService.getFollowers();
-    if (isEmpty(follower)) throw new NotFoundException(`Currently no followers exists.`);
+    if (isEmpty(follower))
+      throw new NotFoundException(`Currently no followers exists.`);
     return follower;
   }
 
@@ -62,5 +64,26 @@ export class UserController {
   @Public()
   createUser(@Body() userDto: UserDto) {
     this.userService.createUser(userDto);
+  }
+
+  @Public()
+  @Get('iniDb/noLeader')
+  iniDbNoLeader() {
+    mockDb.orders = initialDb.orders;
+    mockDb.users = initialDb.users;
+    return mockDb;
+  }
+
+  @Public()
+  @Get('iniDb/mariaIsLeader')
+  iniDbMariaIsLeader() {
+    mockDb.orders = initialDb.orders;
+    mockDb.users = initialDb.users.map((user) => {
+      if (user.name === 'maria') {
+        return { ...user, role: 'leader' };
+      }
+      return user;
+    });
+    return mockDb;
   }
 }

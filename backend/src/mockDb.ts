@@ -6,11 +6,19 @@ export interface Db {
   orders: OrderDbo[];
 }
 
-const mariaId = 'id_100'
-export const mockDb: Db = {
-  orders: [{ details: 'banana', id: 'id_101', userId: mariaId },
-  { details: 'apple', id: 'id_102', userId: mariaId, payed: true, price: 10.42 },
-  { details: 'olive', id: 'id_103', userId: mariaId, price: 9.99 }],
+const mariaId = 'id_100';
+export const initialDb: Db = {
+  orders: [
+    { details: 'banana', id: 'id_101', userId: mariaId },
+    {
+      details: 'apple',
+      id: 'id_102',
+      userId: mariaId,
+      payed: true,
+      price: 10.42,
+    },
+    { details: 'olive', id: 'id_103', userId: mariaId, price: 9.99 },
+  ],
   users: [
     {
       id: 'id_99',
@@ -21,8 +29,7 @@ export const mockDb: Db = {
       id: mariaId,
       name: 'maria',
       password: '123',
-      role: 'leader',
-      paypalUrl: 'maria'
+      paypalUrl: 'maria',
     },
     {
       id: 'id_104',
@@ -44,3 +51,5 @@ export const mockDb: Db = {
     },
   ],
 };
+
+export const mockDb = initialDb;

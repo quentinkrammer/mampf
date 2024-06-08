@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
+import { DbResetMenu } from "./components/DbResetMenu";
 import "./index.css";
 import { router } from "./router";
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <ThemeProvider theme={darkTheme}>
       <QueryClientProvider client={queryClient}>
         <CssBaseline />
+        <DbResetMenu />
         <RouterProvider router={router} />
         <ReactQueryDevtools />
       </QueryClientProvider>
