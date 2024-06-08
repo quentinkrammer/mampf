@@ -30,6 +30,23 @@ export class OrderService {
     mockDb.orders = orders;
   }
 
+  editPrice(
+    userId: string,
+    orderId: string,
+    price: number,
+  ) {
+    const user = mockDb.users.find((user) => user.id === userId && user.role === 'leader')
+    if (!user) throw new HttpException(
+      'Only the leader can edit a price',
+      HttpStatus.FORBIDDEN,
+    );
+    const orders = mockDb.orders.map((order) => {
+      if (order.id !== orderId) return order;
+      return { ...order, price };
+    });
+    mockDb.orders = orders;
+  }
+
   getAllOrders() {
     const users = mockDb.users
     return mockDb.orders.map(order => {

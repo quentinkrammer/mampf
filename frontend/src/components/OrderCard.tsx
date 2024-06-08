@@ -8,7 +8,7 @@ import { usePayOrderMutation } from "../hooks/usePayOrderMutation";
 interface OrderCardProps extends CardProps {
     order: Order;
     header: string;
-    onEditPrice?: () => void
+    onEditPrice?: (order: Order) => void
 }
 export function OrderCard({ order, header, onEditPrice, ...forwardProps }: OrderCardProps) {
     const { data: user } = useMyUserData()
@@ -36,7 +36,7 @@ export function OrderCard({ order, header, onEditPrice, ...forwardProps }: Order
                 {displayPayorderButton && <Button onClick={() => payOrderMutation.mutate(order)} variant="contained">
                     Mark as payed
                 </Button>}
-                {displayEditPriceButton && <Button onClick={onEditPrice} variant="contained">
+                {displayEditPriceButton && <Button onClick={() => onEditPrice?.(order)} variant="contained">
                     Edit Price
                 </Button>}
             </div>

@@ -9,7 +9,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { AuthRequestDto } from 'src/dto/authDto';
-import { OrderDto } from 'src/dto/orderDto';
+import { EditPriceDto, OrderDto } from 'src/dto/orderDto';
 import { OrderService } from '../service/order.service';
 import { isEmpty } from 'lodash';
 
@@ -36,6 +36,15 @@ export class OrderController {
     @Body() orderDto: OrderDto,
   ) {
     return this.orderService.editOrder(userId, orderId, orderDto);
+  }
+
+  @Put('/editPrice/:orderId')
+  editPrice(
+    @Param() { orderId }: { orderId: string },
+    @Request() { user: { sub: userId } }: AuthRequestDto,
+    @Body() editPriceDto: EditPriceDto,
+  ) {
+    return this.orderService.editPrice(userId, orderId, editPriceDto.price);
   }
 
   @Post()

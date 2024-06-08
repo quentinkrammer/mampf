@@ -12,3 +12,7 @@ export class PartialOrderDto {
   price?: number;
   payed?: boolean;
 }
+
+export class EditPriceDto {
+  price: number;
+}

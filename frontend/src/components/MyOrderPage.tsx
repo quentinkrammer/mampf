@@ -8,6 +8,7 @@ import { isPrice } from "../util/isPrice";
 import { displayStringAsPrice } from "../util/displayStringAsPrice";
 import { useMyOrderMutation } from "../hooks/useMyOrderMutation";
 import { OrderCard } from "./OrderCard";
+import { MoneyTextField } from "./MoneyTextField";
 
 export function MyOrderPage() {
   const { isSuccess, isLoadingError } = useLeader();
@@ -48,7 +49,6 @@ function PlaceOrderForm({ onOrderPlaced }: { onOrderPlaced?: () => void }) {
   const [details, setDetails] = useState('')
   const [detailsError, setDetailsError] = useState(false)
   const [price, setPrice] = useState('')
-  const [priceError, setPriceError] = useState(false)
   const orderMutation = useMyOrderMutation(onOrderPlaced)
 
   return (
@@ -66,27 +66,7 @@ function PlaceOrderForm({ onOrderPlaced }: { onOrderPlaced?: () => void }) {
         }}
         onBlur={(e) => { if (!e.target.value) setDetailsError(true) }}
       />
-      <TextField
-        label="Price"
-        variant="outlined"
-        value={price}
-        error={priceError}
-        helperText={priceError && FORM_HELPER_TEXT.valueMustMatchNumberFormat}
-        sx={{ m: 1, width: '25ch' }}
-        InputProps={{
-          endAdornment: <InputAdornment position="end">€</InputAdornment>,
-        }}
-        onChange={({ target: { value } }) => {
-          if (!isPrice(value)) return
-          setPriceError(false)
-          setPrice(value)
-        }}
-        onBlur={({ target: { value } }) => {
-          if (value && !isPrice(value)) setPriceError(true)
-          const converted = displayStringAsPrice(value) ?? ''
-          setPrice(converted)
-        }}
-      />
+      <MoneyTextField onPrice={setPrice} price={price} />
       <Button onClick={() => orderMutation.mutate({ details, price })} disabled={!details}>
         Place Order
       </Button>
