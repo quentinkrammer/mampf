@@ -27,7 +27,7 @@ function App() {
         <Avatar>{data && data?.name.charAt(0)}</Avatar>
       </div>
 
-      <div style={{ overflow: 'auto', height: '100%' }} >
+      <div style={{ overflow: 'auto', height: '100%', paddingTop: '0.5rem' }} >
         <Outlet />
       </div>
     </div>

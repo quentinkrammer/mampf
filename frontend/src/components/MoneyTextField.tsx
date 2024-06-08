@@ -17,7 +17,7 @@ export function MoneyTextField({ price, onPrice, ...forwardProps }: MoneyTextFie
         value={price}
         error={priceError}
         helperText={priceError && FORM_HELPER_TEXT.valueMustMatchNumberFormat}
-        sx={{ m: 1, width: '25ch' }}
+        sx={{ width: '25ch' }}
         InputProps={{
             endAdornment: <InputAdornment position="end">€</InputAdornment>,
         }}
