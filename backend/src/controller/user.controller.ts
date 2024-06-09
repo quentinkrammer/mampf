@@ -69,15 +69,15 @@ export class UserController {
   @Public()
   @Get('iniDb/noLeader')
   iniDbNoLeader() {
-    mockDb.orders = initialDb.orders;
-    mockDb.users = initialDb.users;
+    mockDb.orders = JSON.parse(JSON.stringify(initialDb.orders));
+    mockDb.users = JSON.parse(JSON.stringify(initialDb.users));
     return mockDb;
   }
 
   @Public()
   @Get('iniDb/mariaIsLeader')
   iniDbMariaIsLeader() {
-    mockDb.orders = initialDb.orders;
+    mockDb.orders = JSON.parse(JSON.stringify(initialDb.orders));
     mockDb.users = initialDb.users.map((user) => {
       if (user.name === 'maria') {
         return { ...user, role: 'leader' };

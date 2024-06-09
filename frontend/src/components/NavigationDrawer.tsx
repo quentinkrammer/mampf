@@ -14,7 +14,7 @@ import Drawer from "@mui/material/Drawer";
 import { useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { css } from "goober";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { LOCAL_STORAGE_KEYS, PAGES } from "../constants";
 import { requestHeaders } from "../fetch";
@@ -38,6 +38,7 @@ export function NavigationDrawer() {
   const { data: userData } = useMyUserData();
   const isNotLoggedIn = !userData;
   const queryClient = useQueryClient();
+  const anchorRef = useRef<HTMLAnchorElement>(null)
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -74,11 +75,13 @@ export function NavigationDrawer() {
                     })}
                   >
                     <Link
+                      ref={anchorRef}
                       to={PAGES[route as keyof typeof PAGES]}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         color: "#FFF",
+                        width: '100%',
                       }}
                     >
                       <ListItemIcon>{icon}</ListItemIcon>

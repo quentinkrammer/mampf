@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash';
 import { OrderDbo } from './dbo/orderDbo';
 import { UserDbo } from './dbo/userDbo';
 
@@ -53,4 +52,4 @@ export const initialDb: Db = {
   ],
 };
 
-export const mockDb = cloneDeep(initialDb)
+export const mockDb = JSON.parse(JSON.stringify(initialDb)) as Db;
