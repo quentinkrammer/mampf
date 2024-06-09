@@ -2,7 +2,7 @@ export const PAGES = {
   auth: "auth",
   myOrder: "myOrder",
   allOrders: "allOrders",
-  shopTeam: "shopTeam"
+  shopTeam: "shopTeam",
 } as const;
 export type Pages = (typeof PAGES)[keyof typeof PAGES];
 
@@ -15,10 +15,10 @@ export const QUERY_KEYS = {
   getLeader: "getLeader",
   getFollower: "getFollower",
   getMyOrders: "getMyOrders",
-  getAllOrders: "getAllOrders"
+  getAllOrders: "getAllOrders",
 };
 
 export const FORM_HELPER_TEXT = {
-  fieldRequired: 'Field required',
-  valueMustMatchNumberFormat: 'Value must match number format'
-}
+  fieldRequired: "Field required",
+  valueMustMatchNumberFormat: "Value must match number format",
+};

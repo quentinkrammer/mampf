@@ -24,7 +24,7 @@ async function fetchRequest(
   }: {
     options?: Parameters<typeof fetch>[1];
     urlSearchParams?: Record<string, string>;
-  } = {}
+  } = {},
 ) {
   const fullUrl = `${import.meta.env.VITE_BACKEND_URL}/${trim(url, "/")}`;
   const searchParams = new URLSearchParams(urlSearchParams).toString();
@@ -37,7 +37,7 @@ async function fetchRequest(
 
   if (!response.ok)
     throw Error(
-      `Request failed with StatusCode '${response.status}' and StatusText '${response.statusText}'`
+      `Request failed with StatusCode '${response.status}' and StatusText '${response.statusText}'`,
     );
   try {
     const body = await response.json();
@@ -49,7 +49,7 @@ async function fetchRequest(
 
 export function get(
   url: FetchParameters[0],
-  urlSearchParams?: UrlSearchParams
+  urlSearchParams?: UrlSearchParams,
 ) {
   return fetchRequest(url, { urlSearchParams: urlSearchParams });
 }
@@ -57,7 +57,7 @@ export function get(
 export function post<T>(
   url: FetchParameters[0],
   body: T,
-  urlSearchParams: UrlSearchParams = {}
+  urlSearchParams: UrlSearchParams = {},
 ) {
   return fetchRequest(url, {
     options: { method: "post", body: JSON.stringify(body) },
@@ -68,7 +68,7 @@ export function post<T>(
 export function put<T>(
   url: FetchParameters[0],
   body: T,
-  urlSearchParams: UrlSearchParams = {}
+  urlSearchParams: UrlSearchParams = {},
 ) {
   return fetchRequest(url, {
     options: { method: "put", body: JSON.stringify(body) },

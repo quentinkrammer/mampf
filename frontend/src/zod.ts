@@ -25,11 +25,11 @@ export const orderSchema = z.object({
   details: z.string(),
   price: z.optional(z.number()),
   payed: z.optional(z.boolean()),
-  username: z.optional(z.string())
-})
-export type Order = z.infer<typeof orderSchema>
+  username: z.optional(z.string()),
+});
+export type Order = z.infer<typeof orderSchema>;
 
 export const postOrderSchema = z.object({
   details: z.string(),
   price: z.optional(z.number()),
-})
+});
