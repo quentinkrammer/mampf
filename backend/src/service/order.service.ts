@@ -30,16 +30,15 @@ export class OrderService {
     mockDb.orders = orders;
   }
 
-  editPrice(
-    userId: string,
-    orderId: string,
-    price: number,
-  ) {
-    const user = mockDb.users.find((user) => user.id === userId && user.role === 'leader')
-    if (!user) throw new HttpException(
-      'Only the leader can edit a price',
-      HttpStatus.FORBIDDEN,
+  editPrice(userId: string, orderId: string, price: number) {
+    const user = mockDb.users.find(
+      (user) => user.id === userId && user.role === 'leader',
     );
+    if (!user)
+      throw new HttpException(
+        'Only the leader can edit a price',
+        HttpStatus.FORBIDDEN,
+      );
     const orders = mockDb.orders.map((order) => {
       if (order.id !== orderId) return order;
       return { ...order, price };
@@ -48,10 +47,10 @@ export class OrderService {
   }
 
   getAllOrders() {
-    const users = mockDb.users
-    return mockDb.orders.map(order => {
-      const user = users.find(user => user.id === order.userId)
-      return { ...order, username: user?.name }
+    const users = mockDb.users;
+    return mockDb.orders.map((order) => {
+      const user = users.find((user) => user.id === order.userId);
+      return { ...order, username: user?.name };
     });
   }
 

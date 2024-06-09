@@ -15,7 +15,7 @@ import { isEmpty } from 'lodash';
 
 @Controller('orders')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) { }
+  constructor(private readonly orderService: OrderService) {}
 
   @Get('getAllOrders')
   getAllOrders() {
@@ -26,7 +26,7 @@ export class OrderController {
   getOrderFromUser(@Request() { user: { sub: userId } }: AuthRequestDto) {
     const order = this.orderService.getOrderFromUser(userId);
     if (isEmpty(order)) throw new NotFoundException(`No order found`);
-    return order
+    return order;
   }
 
   @Put(':orderId')
