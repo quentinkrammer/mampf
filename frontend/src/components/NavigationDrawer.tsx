@@ -86,7 +86,7 @@ export function NavigationDrawer() {
                     </Link>
                   </ListItem>
                 );
-              }
+              },
             )}
           </List>
         </Box>

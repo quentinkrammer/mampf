@@ -14,18 +14,25 @@ import { useLeader } from "../hooks/useLeader";
 
 function App() {
   useRedirectToAuthOrMyOrder();
-  const followerMutation = useFollowerMutation()
-  const { data: leader } = useLeader()
+  const followerMutation = useFollowerMutation();
+  const { data: leader } = useLeader();
   const { data } = useMyUserData();
 
-  const showJoinButton = !data?.role && leader
+  const showJoinButton = !data?.role && leader;
 
   const onJoinAsFollower = () => {
-    followerMutation.mutate()
-  }
+    followerMutation.mutate();
+  };
 
   return (
-    <div style={{ height: '100dvh', display: 'grid', gridTemplateRows: 'auto 1fr', gridAutoFlow: 'row' }}>
+    <div
+      style={{
+        height: "100dvh",
+        display: "grid",
+        gridTemplateRows: "auto 1fr",
+        gridAutoFlow: "row",
+      }}
+    >
       <div
         style={{
           display: "flex",
@@ -35,15 +42,18 @@ function App() {
         }}
       >
         <NavigationDrawer />
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-          {showJoinButton && <Button startIcon={<PersonAddAlt />} onClick={onJoinAsFollower}>Join</Button>}
+        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+          {showJoinButton && (
+            <Button startIcon={<PersonAddAlt />} onClick={onJoinAsFollower}>
+              Join
+            </Button>
+          )}
           <LeaderLink />
         </div>
         <MyAvatar />
-
       </div>
 
-      <div style={{ overflow: 'auto', height: '100%', paddingTop: '0.5rem' }} >
+      <div style={{ overflow: "auto", height: "100%", paddingTop: "0.5rem" }}>
         <Outlet />
       </div>
     </div>
@@ -62,7 +72,5 @@ function useRedirectToAuthOrMyOrder() {
     navigate(PAGES.myOrder);
   }, [navigate]);
 }
-
-
 
 export default App;

@@ -10,7 +10,16 @@ export function AuthPage() {
   const loginIsDisabled = !name || !password;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '35rem', marginLeft: 'auto', marginRight: 'auto' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        maxWidth: "35rem",
+        marginLeft: "auto",
+        marginRight: "auto",
+      }}
+    >
       <TextField
         label="Username"
         variant="outlined"
@@ -29,7 +38,7 @@ export function AuthPage() {
         onClick={() => {
           loginMutation.mutate();
         }}
-        style={{ alignSelf: 'end' }}
+        style={{ alignSelf: "end" }}
       >
         Sign In
       </Button>

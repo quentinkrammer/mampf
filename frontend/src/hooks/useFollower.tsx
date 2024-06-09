@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../constants";
 import { get } from "../fetch";
-import {
-  followerSchema
-} from "../zod";
+import { followerSchema } from "../zod";
 import { z } from "zod";
 
 export function useFollower() {
