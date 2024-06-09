@@ -11,6 +11,10 @@ export function useActiveRoute() {
       return PAGES.auth;
     case PAGES.myOrder:
       return PAGES.myOrder;
+    case PAGES.shopTeam:
+      return PAGES.shopTeam;
+    case PAGES.allOrders:
+      return PAGES.allOrders;
     default:
       assertUnreachable(domain);
   }

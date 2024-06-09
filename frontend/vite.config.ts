@@ -2,8 +2,11 @@ import react from "@vitejs/plugin-react";
 import { defineConfig, loadEnv } from "vite";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, isPreview, mode }) => {
   const env = loadEnv(mode, process.cwd(), "VITE_");
+  console.log("command: ", command);
+  console.log("isPreview: ", isPreview);
+  console.log("mode: ", mode);
   return {
     plugins: [react()],
     define: {
