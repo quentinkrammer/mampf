@@ -1,9 +1,9 @@
-import { QUERY_KEYS } from "../constants";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postOrderSchema } from "../zod";
-import { post } from "../fetch";
 import { isFinite } from "lodash";
+import { QUERY_KEYS } from "../constants";
+import { post } from "../fetch";
 import { displayStringAsPrice } from "../util/displayStringAsPrice";
+import { postOrderSchema } from "../zod";
 
 export function useMyOrderMutation(onOrderPlaced?: () => void) {
   const queryClient = useQueryClient();
@@ -12,6 +12,7 @@ export function useMyOrderMutation(onOrderPlaced?: () => void) {
     mutationKey: ["postMyOrders"],
     mutationFn: ({ details, price }: { details: string; price?: string }) => {
       const priceFloat = parseFloat(displayStringAsPrice(price) ?? "");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const reqBody: any = { details };
       if (isFinite(priceFloat)) {
         reqBody.price = priceFloat;
@@ -22,6 +23,7 @@ export function useMyOrderMutation(onOrderPlaced?: () => void) {
     onSuccess: () => {
       onOrderPlaced?.();
       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getMyOrders] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.getAllOrders] });
     },
   });
 }
